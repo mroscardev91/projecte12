@@ -28,8 +28,8 @@ def create():
     if request.method == 'POST':
         datos       = request.form
         title       = datos.get('nom')
-        description = datos.get('description')
-        price       = int(datos.get('price'))
+        description = datos.get('descripcio')
+        price       = int(datos.get('preu'))
         foto        = 'hola'
         created     = datetime.datetime.now()
         updated     = datetime.datetime.now()
@@ -41,6 +41,7 @@ def create():
         return redirect(url_for('list'))
     else:
         return render_template('products/create.html')
+
     
 @app.route("/products/read/<int:id>")
 def read(id):
@@ -51,3 +52,46 @@ def read(id):
         items = resultat.fetchall()
     return render_template("products/list.html",items = items)
 
+@app.route("/products/delete/<int:product_id>", methods=['GET', 'POST'])
+def delete(product_id):
+    with get_db() as conn:
+        if request.method == 'POST':
+            sql = "DELETE FROM products WHERE id = ?"
+            conn.execute(sql, (product_id,))
+            return redirect(url_for('item_list'))
+        else:
+            sql = "SELECT * FROM products WHERE id = ?"
+            res = conn.execute(sql, (product_id,))
+            product = res.fetchone()
+            if product:
+                return render_template('products/delete.html', product=product)
+            else:
+                return "Producto no encontrado", 404
+            
+@app.route("/products/update/<int:product_id>", methods=['GET', 'POST'])
+def update(product_id):
+    with get_db() as conn:
+        if request.method == 'POST':
+            datos       = request.form
+            title       = datos.get('nom')
+            description = datos.get('descripcio')
+            price       = int(datos.get('preu'))
+            foto        = 'hola' # O modifica esto según la lógica de tu aplicación
+            updated     = datetime.datetime.now()
+
+            sql = """
+            UPDATE products 
+            SET title = ?, description = ?, photo = ?, price = ?, updated = ? 
+            WHERE id = ?
+            """
+            conn.execute(sql, (title, description, foto, price, updated, product_id))
+            return redirect(url_for('item_list'))
+
+        else:
+            sql = "SELECT * FROM products WHERE id = ?"
+            res = conn.execute(sql, (product_id,))
+            product = res.fetchone()
+            if product:
+                return render_template('products/update.html', product=product)
+            else:
+                return "Producto no encontrado", 404
