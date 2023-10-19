@@ -1,0 +1,24 @@
+body {
+    background-color: black;
+}
+
+table {
+    width: 100%;
+}
+
+h3{
+    color: white;text-align: center;
+    font-size: 3vw;
+}
+
+td{
+    color: #ffdd50;
+}
+
+
+td, th {
+    border: 1px solid #3777a8;
+    color: white;
+    font-size: 2vw;
+    text-align: center;
+}

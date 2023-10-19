@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+    <html lang="ca">
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Llista de productes</title>
+        <link href="/static/css/list.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <h3>Productes📝</h3>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Titol</th>
+                <th>Descripcio</th>
+                <th>Foto</th>
+                <th>Preu</th>
+                <th>Id categoria</th>
+                <th>Id venedor</th>
+                <th>Creacio</th>
+                <th>Actualitzat</th>
+            </tr>
+
+            {% for item in items %}
+                <tr>
+                    <td>{{ item['id'] }}</a></td>
+                    <td>{{ item['title'] }}</a></td>
+                    <td>{{ item['description'] }}</a></td>
+                    <td>{{ item['photo'] }}</a></td>
+                    <td>{{ item['price'] }}</a></td>
+                    <td>{{ item['category_id'] }}</a></td>
+                    <td>{{ item['seller_id'] }}</a></td>
+                    <td>{{ item['created'] }}</a></td>
+                    <td>{{ item['updated'] }}</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    </body>
+    
+    </html>
