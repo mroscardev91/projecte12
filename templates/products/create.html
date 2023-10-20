@@ -7,20 +7,20 @@
     <link rel="stylesheet" href="../../static/css/create.css"
 </head>
 <body>
-    <form method="post" action="/products/create" class="form">
+    <form method="post" action="/products/create" class="form" enctype="multipart/form-data">
         <div class="contenedor_form">
           <h1 class="titulo_form">Afegir Producte</h1>
-          <label for="nom"><i class="fa-solid fa-person"></i> Nom</label>
-          <input class="input_form" type="text" name="nom" required placeholder="El nom del producte" maxlength="255"/>
+          <label for="title"><i class="fa-solid fa-person"></i> Nom</label>
+          <input class="input_form" type="text" name="title" required placeholder="El nom del producte" maxlength="255"/>
           
-          <label for="descripcio" class="label_form"><i class="fa-solid fa-pen"></i> Descripcio</label>
-          <input class="input_form" type="text" name="descripcio" required placeholder="La descripcio del producte"/>
+          <label for="description" class="label_form"><i class="fa-solid fa-pen"></i> Descripcio</label>
+          <input class="input_form" type="msg" name="description" required placeholder="La descripcio del producte"/>
         
-          <label for="foto" class="label_form"><i class="fa-solid fa-pen"></i> Foto</label>
-          <input class="input_form" type="file" name="foto" required placeholder="Foto del producte"/>
+          <label for="photo" class="label_form"><i class="fa-solid fa-pen"></i> Foto</label>
+          <input class="input_form" type="file" name="photo" required placeholder="Foto del producte"/>
           
-          <label for="preu" class="label_form"><i class="fa-solid fa-phone"></i> Preu</label>
-          <input class="input_form" type="number" name="preu" required placeholder="Preu del producte"/>
+          <label for="price" class="label_form"><i class="fa-solid fa-phone"></i> Preu</label>
+          <input class="input_form" type="number" name="price" required placeholder="Preu del producte"/>
           
           <input class="esborrar_form" type="reset" value="Esborrar" />
           <input class="enviar_form" type="submit" value="Afegir" />

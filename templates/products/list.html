@@ -18,10 +18,11 @@
                 <th>Descripcio</th>
                 <th>Foto</th>
                 <th>Preu</th>
-                <th>Id categoria</th>
-                <th>Id venedor</th>
                 <th>Creacio</th>
                 <th>Actualitzat</th>
+                <th>Observar</th>
+                <th>Modificar</th>
+                <th>Borrar</th>
             </tr>
 
             {% for item in items %}
@@ -31,10 +32,11 @@
                     <td>{{ item['description'] }}</a></td>
                     <td>{{ item['photo'] }}</a></td>
                     <td>{{ item['price'] }}</a></td>
-                    <td>{{ item['category_id'] }}</a></td>
-                    <td>{{ item['seller_id'] }}</a></td>
                     <td>{{ item['created'] }}</a></td>
                     <td>{{ item['updated'] }}</a></td>
+                    <td><a href="/products/read/{{ item['id'] }}">🔎</a></td>
+                    <td><a href="/products/update/{{ item['id'] }}">📝</a></td>
+                    <td><a href="/products/delete/{{ item['id'] }}">X</a></td>
                 </tr>
             {% endfor %}
         </table>

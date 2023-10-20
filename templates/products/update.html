@@ -8,15 +8,18 @@
 
 <h2>Actualizar Producto</h2>
 
-<form action="{{ url_for('update', product_id=product.id) }}" method="post">
-    <label for="nom">Nombre:</label>
-    <input type="text" id="nom" name="nom" value="{{ product.title }}" required><br>
+<form action="/products/update/{{item.id}}" method="post" enctype="multipart/form-data">
+    <label for="title">Nombre:</label>
+    <input type="text" id="nom" name="title" value="{{ item.title }}" required><br>
 
-    <label for="descripcio">Descripción:</label>
-    <textarea id="descripcio" name="descripcio" required>{{ product.description }}</textarea><br>
+    <label for="description">Descripción:</label>
+    <textarea id="descripcio" name="description" value="{{ item.description }}" required></textarea><br>
 
-    <label for="preu">Precio:</label>
-    <input type="number" id="preu" name="preu" value="{{ product.price }}" required><br>
+    <label for="price">Precio:</label>
+    <input type="number" id="preu" name="price" value="{{ item.price }}" required><br>
+
+    <label for="photo">Photo:</label>
+    <input type="file" id="photo" name="photo" value="{{ item.photo }}"/>
     <button type="submit">Actualizar</button>
 </form>
 
