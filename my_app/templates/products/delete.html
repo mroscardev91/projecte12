@@ -2,22 +2,20 @@
 <html>
 <head>
     <title>Eliminar Producto</title>
-    <link rel="stylesheet" href="../../static/css/delete.css"
+    <link rel="stylesheet" href="../../static/css/delete.css">
 </head>
 <body>
 
 <h2>¿Estás seguro de que quieres eliminar el siguiente producto?</h2>
-<p>Nom:{{ product.title }}</p>
-<p>Descripcio:{{ product.description }}</p>
-<p>Foto:{{ product.photo }}</p>
-<p>Preu:{{ product.price }}</p>
-<p>Creat:{{ product.created }}</p>
-<p>Actualitzat:{{ product.updated }}</p>
 
-
-<form action="{{ url_for('delete', product_id=product.id) }}" method="post">
-    <button type="submit">Eliminar</button>
-    <a href="{{ url_for('item_list') }}">Cancelar</a>
+<form method="post">
+    {{ form.hidden_tag() }}
+    <p>{{ item.title }}</p>
+    <p>{{ item.description }}</p>
+    <p>{{ item.photo }}</p>
+    <p>{{ item.price }}</p>
+    <!-- ... puedes mostrar más detalles del producto si lo deseas ... -->
+    {{ form.submit(label="Delete") }}
 </form>
 
 </body>

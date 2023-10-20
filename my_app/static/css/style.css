@@ -17,3 +17,10 @@ h1{
 img{
     margin-top: 9px;
 }
+
+a{
+    color: white;
+    margin-top: 4vh;
+    font-size: 2vw;
+    text-decoration: none;
+}

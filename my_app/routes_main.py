@@ -1,8 +1,10 @@
-from flask import Blueprint, redirect, url_for, render_template, request, Flask
+from flask import Blueprint, redirect, url_for, render_template, request, Flask, flash
 from .models import categoria, product, user
 import sqlite3, datetime, os
 from werkzeug.utils import secure_filename
 from . import db_manager as db
+from .forms import ItemForm
+from .forms import DeleteForm
 
 app = Flask(__name__)
 UPLOAD_FOLDER = './upload'
@@ -70,42 +72,46 @@ def read(id):
     return render_template("products/list.html",items = items)
 
 
-@main_bp.route("/products/update/<int:id>", methods = ['GET', 'POST'])
+@main_bp.route("/products/update/<int:id>", methods=['GET', 'POST'])
 def update(id):
     item = db.session.query(product).filter(product.id == id).one()
-    if request.method == 'GET':
-        # with get_db() as conn:
-        #     results = conn.execute("SELECT * FROM products WHERE id = " + str(id))
-        #     items = results.fetchall()
+    form = ItemForm()
 
-        return render_template('products/update.html', item = item)
-    
-    elif request.method == 'POST':
-        # with get_db() as conn:
-        datos           = request.form
-        description     = datos.get('description')
-        title           = datos.get('title')
-        price           = float(datos.get('price'))
-        foto            = request.files['photo'].filename
-        updated         = datetime.datetime.now()
-            # conn.execute("UPDATE products SET title = ?, description = ?, photo = ?, price = ?, updated = ? WHERE id = ?", 
-            #     (title, description, foto, price, updated, id))
-        item.title          = title
-        item.description    = description
-        item.price          = price
-        item.photo          = foto
-        item.updated        = updated
+    if form.validate_on_submit():
+        item.title = form.title.data
+        item.description = form.description.data
+        item.price = form.price.data
 
-        # update!
+        photo = form.photo.data
+        item.photo = photo.filename
+
+        item.updated = datetime.datetime.now()
+
         db.session.add(item)
         db.session.commit()
+        flash('Producte actualizat correctament!', 'success')
         return redirect(url_for('main_bp.list'))
 
-@main_bp.route("/products/delete/<int:id>", methods = ['GET', 'POST'])  
+    elif request.method == 'GET':
+        form.title.data = item.title
+        form.description.data = item.description
+        form.price.data = item.price
+
+    return render_template('products/update.html', form=form, item=item)
+
+@main_bp.route("/products/delete/<int:id>", methods=['GET', 'POST'])
 def delete(id):
-    item = db.session.query(product).filter(product.id == id).one()
+    item = db.session.query(product).filter(product.id == id).one_or_none()
+    if item is None:
+        flash('Producte no trobat!', 'danger')
+        return redirect(url_for('main_bp.list'))
+    
+    form = DeleteForm()
 
-    db.session.delete(item)
-    db.session.commit()
+    if form.validate_on_submit():
+        db.session.delete(item)
+        db.session.commit()
+        flash('Producte eliminat correctament!', 'success')
+        return redirect(url_for('main_bp.list'))
 
-    return redirect(url_for('main_bp.list'))
+    return render_template('products/delete.html', form=form, item=item)
